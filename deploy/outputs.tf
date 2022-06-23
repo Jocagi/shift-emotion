@@ -1,4 +1,4 @@
 output "url_cloudFront" {
 
-  value = aws_cloudfront_distribution.cloudfront_client.domain_name
+  value = aws_cloudfront_distribution.cloudfront.domain_name
 }
