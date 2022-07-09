@@ -1,7 +1,7 @@
 resource "aws_lambda_function" "getEmotion" {
 
   function_name = "${var.app_name}-getEmotion"
-  handler       = "lambda_handler"
+  handler       = "lambda_function.lambda_handler"
   runtime       = var.runtime.python
   timeout       = 3
   memory_size   = 512

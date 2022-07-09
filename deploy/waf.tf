@@ -1,3 +1,4 @@
+/*
 resource "aws_wafv2_web_acl" "waf" {
 
   name        = "${var.app_name}-waf-cloudfront"
@@ -63,3 +64,4 @@ resource "aws_wafv2_web_acl" "waf" {
     }
   }
 }
+*/
