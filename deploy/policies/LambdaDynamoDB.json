@@ -1,0 +1,38 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+        "Action": [
+            "logs:CreateLogStream",
+            "logs:CreateLogGroup"
+        ],
+        "Resource": [
+            "arn:aws:logs:::log-group:*:*"
+        ],
+        "Effect": "Allow"
+    },
+    {
+        "Action": [
+            "logs:PutLogEvents"
+        ],
+        "Resource": [
+            "arn:aws:logs:::log-group:*:*:*"
+        ],
+        "Effect": "Allow"
+    },
+    {
+        "Action": [
+            "dynamodb:GetItem",
+            "dynamodb:PutItem",
+            "dynamodb:Scan",
+            "dynamodb:Query",
+            "dynamodb:DeleteItem"
+        ],
+        "Resource": [
+            "arn:aws:dynamodb:*:*:table/users-table",
+            "arn:aws:dynamodb:*:*:table/playlist-history"
+        ],
+        "Effect": "Allow"
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "name": "shift-emotion",
+  "version": "1.0.0",
+  "description": "Example project demonstrating AWS Lambda and API Gateway authorizer",
+  "main": "index.js",
+  "keywords": [
+    "serverless",
+    "jwt"
+  ],
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "dynamodb-toolbox": "^0.1.0",
+    "jsonwebtoken": "^8.5.1",
+    "uuid": "^7.0.1"
+  }
+}

@@ -47,3 +47,43 @@ resource "aws_s3_object" "getEmotion_zip" {
 
   etag = filemd5(data.archive_file.getEmotion_zip.output_path)
 }
+
+resource "aws_s3_object" "hello_zip" {
+
+  bucket = aws_s3_bucket.s3_lambdas.id
+
+  key    = "lambda_hello.zip"
+  source = data.archive_file.hello_zip.output_path
+
+  etag = filemd5(data.archive_file.hello_zip.output_path)
+}
+
+resource "aws_s3_object" "register_zip" {
+
+  bucket = aws_s3_bucket.s3_lambdas.id
+
+  key    = "lambda_register.zip"
+  source = data.archive_file.register_zip.output_path
+
+  etag = filemd5(data.archive_file.register_zip.output_path)
+}
+
+resource "aws_s3_object" "login_zip" {
+
+  bucket = aws_s3_bucket.s3_lambdas.id
+
+  key    = "lambda_login.zip"
+  source = data.archive_file.login_zip.output_path
+
+  etag = filemd5(data.archive_file.login_zip.output_path)
+}
+
+resource "aws_s3_object" "authorize_zip" {
+
+  bucket = aws_s3_bucket.s3_lambdas.id
+
+  key    = "lambda_authorize.zip"
+  source = data.archive_file.authorize_zip.output_path
+
+  etag = filemd5(data.archive_file.authorize_zip.output_path)
+}
