@@ -22,7 +22,7 @@ def getTracks(trackName):
                 'preview_url': item['preview_url'] 
             }
         )
-    return {"statusCode": 200, "body": result}
+    return {"statusCode": 200, "body": songs}
 
 
 def lambda_handler(event, context):
