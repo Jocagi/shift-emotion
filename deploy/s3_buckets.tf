@@ -87,3 +87,13 @@ resource "aws_s3_object" "authorize_zip" {
 
   etag = filemd5(data.archive_file.authorize_zip.output_path)
 }
+
+resource "aws_s3_object" "profile_zip" {
+
+  bucket = aws_s3_bucket.s3_lambdas.id
+
+  key    = "lambda_profile.zip"
+  source = data.archive_file.profile_zip.output_path
+
+  etag = filemd5(data.archive_file.profile_zip.output_path)
+}

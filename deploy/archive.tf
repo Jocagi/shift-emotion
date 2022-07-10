@@ -33,3 +33,10 @@ data "archive_file" "authorize_zip" {
   source_dir  = "../functions/authorize"
   output_path = "../zipFiles/lambda_authorize.zip"
 }
+
+data "archive_file" "profile_zip" {
+
+  type        = "zip"
+  source_dir  = "../functions/profile"
+  output_path = "../zipFiles/lambda_profile.zip"
+}

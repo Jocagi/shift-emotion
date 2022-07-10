@@ -128,3 +128,35 @@ resource "aws_iam_role_policy_attachment" "authorize_DynamoDB" {
   role       = aws_iam_role.authorize_service.name
   policy_arn = aws_iam_policy.authorize_policy.arn
 }
+
+resource "aws_iam_role_policy_attachment" "authorize_InvokeFunction" {
+
+  role       = aws_iam_role.authorize_service.name
+  policy_arn = "arn:aws:iam::aws:policy/AWSLambda_FullAccess"
+}
+
+// profile role
+resource "aws_iam_role" "profile_service" {
+
+  name               = "${var.app_name}-profile-service"
+  assume_role_policy = file("./policies/AssumeRoleLambda.json")
+}
+
+resource "aws_iam_role_policy_attachment" "profile_ExecutionRole" {
+
+  role       = aws_iam_role.profile_service.name
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+}
+
+resource "aws_iam_policy" "profile_policy" {
+  name        = "profile-policy"
+  description = "A test policy"
+
+  policy = file("./policies/LambdaDynamoDB.json")
+}
+
+resource "aws_iam_role_policy_attachment" "profile_DynamoDB" {
+
+  role       = aws_iam_role.profile_service.name
+  policy_arn = aws_iam_policy.profile_policy.arn
+}

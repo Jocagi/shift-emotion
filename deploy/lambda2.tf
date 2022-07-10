@@ -87,3 +87,27 @@ resource "aws_lambda_function" "authorize" {
     }
   }
 }
+
+resource "aws_lambda_function" "profile" {
+
+  function_name = "${var.app_name}-profile"
+  handler       = "profile.handler"
+  runtime       = var.runtime.nodejs
+  timeout       = 3
+  memory_size   = 512
+  architectures = ["arm64"]
+
+  s3_bucket = aws_s3_bucket.s3_lambdas.id
+  s3_key    = aws_s3_object.profile_zip.key
+
+  source_code_hash = data.archive_file.profile_zip.output_base64sha256
+
+  role = aws_iam_role.profile_service.arn
+
+  environment {
+    variables = {
+      REGION = var.provider_conf.region
+      JWT_SECRET = var.jwt_secret
+    }
+  }
+}
