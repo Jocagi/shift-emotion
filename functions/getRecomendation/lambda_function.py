@@ -34,7 +34,7 @@ tracksDictionary = {
 }
 
 def getRecomendation(emotion):
-    result = sp.recommendations(seed_artists= artistDictionary[emotion], seed_tracks=tracksDictionary[emotion], seed_genres=[genres], limit= 1)
+    result = sp.recommendations(seed_artists= artistDictionary[emotion], seed_tracks=tracksDictionary[emotion], seed_genres=genres, limit= 1)
     songs = []
     for item in result['tracks']:
         songs.append(
