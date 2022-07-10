@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
-const { getUserByEmail } = require("../lib/db");
+const { getUserByEmail } = require("db");
 
 async function signToken(user) {
   const secret = Buffer.from(process.env.JWT_SECRET, "base64");

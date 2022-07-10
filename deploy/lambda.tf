@@ -82,6 +82,13 @@ resource "aws_lambda_function" "login" {
 
   role = aws_iam_role.login_service.arn
 
+  environment {
+    variables = {
+      REGION = var.provider_conf.region
+      JWT_SECRET = var.jwt_secret
+    }
+  }
+
 }
 
 resource "aws_lambda_function" "authorize" {
@@ -100,4 +107,10 @@ resource "aws_lambda_function" "authorize" {
 
   role = aws_iam_role.authorize_service.arn
 
+  environment {
+    variables = {
+      REGION = var.provider_conf.region
+      JWT_SECRET = var.jwt_secret
+    }
+  }
 }

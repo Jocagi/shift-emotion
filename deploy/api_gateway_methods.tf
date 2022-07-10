@@ -318,6 +318,10 @@ resource "aws_api_gateway_method" "login_post" {
   api_key_required = false
   http_method      = "POST"
   authorization    = "NONE"
+
+  request_parameters = {
+    "method.request.path.proxy" = true
+  }
 }
 
 resource "aws_api_gateway_method_response" "login_post_response_200" {
@@ -347,7 +351,7 @@ resource "aws_api_gateway_integration" "lambda_login" {
 
   uri = aws_lambda_function.login.invoke_arn
  
-  type                 = "AWS"
+  type                 = "AWS_PROXY"
   content_handling     = "CONVERT_TO_TEXT"
 }
 
