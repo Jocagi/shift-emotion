@@ -5,15 +5,15 @@ variable "provider_conf" {
 
   default = {
     region     = "us-east-1"
-    access_key = "AKIA4MFYPLVMCZZQBPXR"
-    secret_key = "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"
+    access_key = ""
+    secret_key = ""
   }
 }
 
 variable "jwt_secret" {
 
   type    = string
-  default = ""
+  default = "superseguridad2022"
 }
 
 variable "app_name" {

@@ -39,6 +39,7 @@ resource "aws_api_gateway_deployment" "api_deploy" {
     aws_api_gateway_integration.spotify_recomendation_cors,
     aws_api_gateway_integration.spotify_recomendations_cors,
     aws_api_gateway_integration.lambda_hello,
+
     aws_api_gateway_integration.hello_cors,
     aws_api_gateway_integration.lambda_register,
     aws_api_gateway_integration.register_cors,
