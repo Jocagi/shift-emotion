@@ -24,7 +24,5 @@ def getTrack(trackName):
         )
     return {"statusCode": 200, "body": songs}
 
-getTrack('hello')
-
-# def lambda_handler(event, context):
-#     return getTrack(event['trackName'])
+def lambda_handler(event, context):
+    return getTrack(event['trackName'])
