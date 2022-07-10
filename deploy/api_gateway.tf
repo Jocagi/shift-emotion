@@ -26,6 +26,18 @@ resource "aws_api_gateway_deployment" "api_deploy" {
   depends_on = [
     aws_api_gateway_integration.lambda_getEmotion,
     aws_api_gateway_integration.face_details_cors,
+    aws_api_gateway_integration.lambda_getGenres,
+    aws_api_gateway_integration.lambda_getRecomendations,
+    aws_api_gateway_integration.lambda_getRecomendation,
+    aws_api_gateway_integration.lambda_getTrack,
+    aws_api_gateway_integration.lambda_getTracks,
+    aws_api_gateway_integration.lambda_getAnalysis,
+    aws_api_gateway_integration.spotify_track_cors,
+    aws_api_gateway_integration.spotify_tracks_cors,
+    aws_api_gateway_integration.spotify_analysis_cors,
+    aws_api_gateway_integration.spotify_genres_cors,
+    aws_api_gateway_integration.spotify_recomendation_cors,
+    aws_api_gateway_integration.spotify_recomendations_cors,
   ]
 }
 
