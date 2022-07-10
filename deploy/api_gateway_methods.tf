@@ -165,7 +165,7 @@ resource "aws_api_gateway_integration" "lambda_getTrack" {
 
   type                 = "AWS"
   passthrough_behavior = "WHEN_NO_TEMPLATES"
-  content_handling = "CONVERT_TO_TEXT"
+  content_handling     = "CONVERT_TO_TEXT"
 
   request_templates = {
     "application/json" = "{ \"trackName\": \"$input.params('trackName')\" }"
@@ -288,12 +288,13 @@ resource "aws_api_gateway_integration" "lambda_getTracks" {
   rest_api_id             = aws_api_gateway_rest_api.api_gateway.id
   resource_id             = aws_api_gateway_resource.spotify_tracks.id
   http_method             = aws_api_gateway_method.spotify_tracks_get.http_method
-  integration_http_method = aws_api_gateway_method.spotify_tracks_get.http_method
+  integration_http_method = "POST"
 
   uri = aws_lambda_function.getTracks.invoke_arn
 
   type                 = "AWS"
   passthrough_behavior = "WHEN_NO_TEMPLATES"
+  content_handling     = "CONVERT_TO_TEXT"
 
   request_templates = {
     "application/json" = "{ \"trackName\": \"$input.params('trackName')\" }"
@@ -416,12 +417,13 @@ resource "aws_api_gateway_integration" "lambda_getAnalysis" {
   rest_api_id             = aws_api_gateway_rest_api.api_gateway.id
   resource_id             = aws_api_gateway_resource.spotify_analysis.id
   http_method             = aws_api_gateway_method.spotify_analysis_get.http_method
-  integration_http_method = aws_api_gateway_method.spotify_analysis_get.http_method
+  integration_http_method = "POST"
 
   uri = aws_lambda_function.getValence.invoke_arn
 
   type                 = "AWS"
   passthrough_behavior = "WHEN_NO_TEMPLATES"
+  content_handling     = "CONVERT_TO_TEXT"
 
   request_templates = {
     "application/json" = "{ \"trackId\": \"$input.params('trackId')\" }"
@@ -667,10 +669,16 @@ resource "aws_api_gateway_integration" "lambda_getRecomendation" {
   rest_api_id             = aws_api_gateway_rest_api.api_gateway.id
   resource_id             = aws_api_gateway_resource.spotify_recomendation.id
   http_method             = aws_api_gateway_method.spotify_recomendation_get.http_method
-  integration_http_method = aws_api_gateway_method.spotify_recomendation_get.http_method
+  integration_http_method = "POST"
 
   type = "AWS"
-  
+  content_handling     = "CONVERT_TO_TEXT"
+  passthrough_behavior = "WHEN_NO_TEMPLATES"
+
+  request_templates = {
+    "application/json" = "{ \"emotion\": \"$input.params('emotion')\" }"
+  }
+
   uri = aws_lambda_function.getRecommendation.invoke_arn
 }
 
@@ -793,7 +801,13 @@ resource "aws_api_gateway_integration" "lambda_getRecomendations" {
   integration_http_method = aws_api_gateway_method.spotify_recomendations_get.http_method
 
   type = "AWS"
-  
+  content_handling     = "CONVERT_TO_TEXT"
+  passthrough_behavior = "WHEN_NO_TEMPLATES"
+
+  request_templates = {
+    "application/json" = "{ \"emotion\": \"$input.params('emotion')\" }"
+  }
+
   uri = aws_lambda_function.getRecommendations.invoke_arn
 }
 
