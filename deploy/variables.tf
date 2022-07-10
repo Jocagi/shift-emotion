@@ -10,6 +10,12 @@ variable "provider_conf" {
   }
 }
 
+variable "jwt_secret" {
+
+  type    = string
+  default = ""
+}
+
 variable "app_name" {
 
   type    = string

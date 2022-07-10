@@ -1,0 +1,12 @@
+{
+  "name": "shift-emotion",
+  "version": "1.0.0",
+  "description": "AWS Lambda and API Gateway Application",
+  "main": "register.js",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "dynamodb-toolbox": "^0.1.0",
+    "jsonwebtoken": "^8.5.1",
+    "uuid": "^7.0.1"
+  }
+}

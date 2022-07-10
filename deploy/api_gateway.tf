@@ -6,14 +6,14 @@ resource "aws_api_gateway_rest_api" "api_gateway" {
 
   binary_media_types = [ 
     "image/jpeg",
-    "image/png",
-    "application/json"
+    "image/png"
   ]
 }
 
 resource "aws_api_gateway_deployment" "api_deploy" {
 
   rest_api_id = aws_api_gateway_rest_api.api_gateway.id
+  stage_description = "Deployed at ${timestamp()}"
 
   lifecycle {
     create_before_destroy = true
@@ -38,7 +38,14 @@ resource "aws_api_gateway_deployment" "api_deploy" {
     aws_api_gateway_integration.spotify_genres_cors,
     aws_api_gateway_integration.spotify_recomendation_cors,
     aws_api_gateway_integration.spotify_recomendations_cors,
+    aws_api_gateway_integration.lambda_hello,
+    aws_api_gateway_integration.hello_cors,
+    aws_api_gateway_integration.lambda_register,
+    aws_api_gateway_integration.register_cors,
+    aws_api_gateway_integration.lambda_login,
+    aws_api_gateway_integration.login_cors
   ]
+
 }
 
 resource "aws_api_gateway_stage" "api_gw_stage" {
@@ -90,7 +97,7 @@ resource "aws_api_gateway_resource" "spotify" {
 }
 
 
-# /stand/track
+# /spotify/track
 resource "aws_api_gateway_resource" "spotify_track" {
 
   rest_api_id = aws_api_gateway_rest_api.api_gateway.id
@@ -98,7 +105,7 @@ resource "aws_api_gateway_resource" "spotify_track" {
   path_part   = "track"
 }
 
-# /stand/tracks
+# /spotify/tracks
 resource "aws_api_gateway_resource" "spotify_tracks" {
 
   rest_api_id = aws_api_gateway_rest_api.api_gateway.id
@@ -106,7 +113,7 @@ resource "aws_api_gateway_resource" "spotify_tracks" {
   path_part   = "tracks"
 }
 
-# /stand/analysis
+# /spotify/analysis
 resource "aws_api_gateway_resource" "spotify_analysis" {
 
   rest_api_id = aws_api_gateway_rest_api.api_gateway.id
@@ -114,7 +121,7 @@ resource "aws_api_gateway_resource" "spotify_analysis" {
   path_part   = "analysis"
 }
 
-# /stand/genres
+# /spotify/genres
 resource "aws_api_gateway_resource" "spotify_genres" {
 
   rest_api_id = aws_api_gateway_rest_api.api_gateway.id
@@ -122,7 +129,7 @@ resource "aws_api_gateway_resource" "spotify_genres" {
   path_part   = "genres"
 }
 
-# /stand/recomendation
+# /spotify/recomendation
 resource "aws_api_gateway_resource" "spotify_recomendation" {
 
   rest_api_id = aws_api_gateway_rest_api.api_gateway.id
@@ -130,10 +137,34 @@ resource "aws_api_gateway_resource" "spotify_recomendation" {
   path_part   = "recomendation"
 }
 
-# /stand/recomendations
+# /spotify/recomendations
 resource "aws_api_gateway_resource" "spotify_recomendations" {
 
   rest_api_id = aws_api_gateway_rest_api.api_gateway.id
   parent_id   = aws_api_gateway_resource.spotify.id
   path_part   = "recomendations"
+}
+
+# /hello
+resource "aws_api_gateway_resource" "hello" {
+
+  rest_api_id = aws_api_gateway_rest_api.api_gateway.id
+  parent_id   = aws_api_gateway_rest_api.api_gateway.root_resource_id
+  path_part   = "hello"
+}
+
+# /register
+resource "aws_api_gateway_resource" "register" {
+
+  rest_api_id = aws_api_gateway_rest_api.api_gateway.id
+  parent_id   = aws_api_gateway_rest_api.api_gateway.root_resource_id
+  path_part   = "register"
+}
+
+# /login
+resource "aws_api_gateway_resource" "login" {
+
+  rest_api_id = aws_api_gateway_rest_api.api_gateway.id
+  parent_id   = aws_api_gateway_rest_api.api_gateway.root_resource_id
+  path_part   = "login"
 }
