@@ -37,7 +37,7 @@ resource "aws_s3_bucket_acl" "ACL_s3_lambdas" {
   acl    = "private"
 }
 
-// S3 Bucket objets for lambdas zip files
+// Bucket objets of lambdas zip files
 resource "aws_s3_object" "getEmotion_zip" {
 
   bucket = aws_s3_bucket.s3_lambdas.id
@@ -46,4 +46,64 @@ resource "aws_s3_object" "getEmotion_zip" {
   source = data.archive_file.getEmotion_zip.output_path
 
   etag = filemd5(data.archive_file.getEmotion_zip.output_path)
+}
+
+resource "aws_s3_object" "getGenres_zip" {
+
+  bucket = aws_s3_bucket.s3_lambdas.id
+
+  key    = "lambda_getGenres.zip"
+  source = data.archive_file.getGenres_zip.output_path
+
+  etag = filemd5(data.archive_file.getGenres_zip.output_path)
+}
+
+resource "aws_s3_object" "getRecomendation_zip" {
+
+  bucket = aws_s3_bucket.s3_lambdas.id
+
+  key    = "lambda_getRecomendation.zip"
+  source = data.archive_file.getRecomendation_zip.output_path
+
+  etag = filemd5(data.archive_file.getRecomendation_zip.output_path)
+}
+
+resource "aws_s3_object" "getRecomendations_zip" {
+
+  bucket = aws_s3_bucket.s3_lambdas.id
+
+  key    = "lambda_getRecomendations.zip"
+  source = data.archive_file.getRecomendations_zip.output_path
+
+  etag = filemd5(data.archive_file.getRecomendations_zip.output_path)
+}
+
+resource "aws_s3_object" "getTrack_zip" {
+
+  bucket = aws_s3_bucket.s3_lambdas.id
+
+  key    = "lambda_getTrack.zip"
+  source = data.archive_file.getTrack_zip.output_path
+
+  etag = filemd5(data.archive_file.getTrack_zip.output_path)
+}
+
+resource "aws_s3_object" "getTracks_zip" {
+
+  bucket = aws_s3_bucket.s3_lambdas.id
+
+  key    = "lambda_getTracks.zip"
+  source = data.archive_file.getTracks_zip.output_path
+
+  etag = filemd5(data.archive_file.getTracks_zip.output_path)
+}
+
+resource "aws_s3_object" "getValence_zip" {
+
+  bucket = aws_s3_bucket.s3_lambdas.id
+
+  key    = "lambda_getValence.zip"
+  source = data.archive_file.getValence_zip.output_path
+
+  etag = filemd5(data.archive_file.getValence_zip.output_path)
 }
