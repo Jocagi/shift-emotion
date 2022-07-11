@@ -5,8 +5,8 @@ variable "provider_conf" {
 
   default = {
     region     = "us-east-1"
-    access_key = "AKIA4OMG2YY4VZNJCCKJ"
-    secret_key = "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"
+    access_key = "AKIA4OMG2YY4TXDO3VVL"
+    secret_key = "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"
   }
 }
 
@@ -19,7 +19,7 @@ variable "jwt_secret" {
 variable "app_name" {
 
   type    = string
-  default = "shift-emotion-jose"
+  default = "shift-emotion-prod"
 }
 
 variable "runtime" {

@@ -71,8 +71,8 @@ resource "aws_api_gateway_method" "history_put" {
   resource_id      = aws_api_gateway_resource.history.id
   api_key_required = false
   http_method      = "PUT"
-  authorization = "CUSTOM"
-  authorizer_id = aws_api_gateway_authorizer.verify-token.id
+  authorization = "NONE"
+  #authorizer_id = aws_api_gateway_authorizer.verify-token.id
 
   request_parameters = {
     "method.request.path.proxy" = true
@@ -142,8 +142,8 @@ resource "aws_api_gateway_method" "history_get" {
   resource_id      = aws_api_gateway_resource.history-id.id
   api_key_required = false
   http_method      = "GET"
-  authorization = "CUSTOM"
-  authorizer_id = aws_api_gateway_authorizer.verify-token.id
+  authorization = "NONE"
+  #authorizer_id = aws_api_gateway_authorizer.verify-token.id
 
   request_parameters = {
     "method.request.path.proxy" = true,
@@ -214,8 +214,8 @@ resource "aws_api_gateway_method" "history_delete" {
   resource_id      = aws_api_gateway_resource.history-id.id
   api_key_required = false
   http_method      = "DELETE"
-  authorization = "CUSTOM"
-  authorizer_id = aws_api_gateway_authorizer.verify-token.id
+  authorization = "NONE"
+  #authorizer_id = aws_api_gateway_authorizer.verify-token.id
 
   request_parameters = {
     "method.request.path.proxy" = true,
@@ -286,8 +286,8 @@ resource "aws_api_gateway_method" "history_get_my" {
   resource_id      = aws_api_gateway_resource.history.id
   api_key_required = false
   http_method      = "GET"
-  authorization = "CUSTOM"
-  authorizer_id = aws_api_gateway_authorizer.verify-token.id
+  authorization = "NONE"
+  #authorizer_id = aws_api_gateway_authorizer.verify-token.id
 
   request_parameters = {
     "method.request.path.proxy" = true

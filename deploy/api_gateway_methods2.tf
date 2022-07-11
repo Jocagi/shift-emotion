@@ -1,99 +1,3 @@
-## [GET] /hello - Lambda function hello
-resource "aws_api_gateway_method" "hello_get" {
-
-  rest_api_id      = aws_api_gateway_rest_api.api_gateway_2.id
-  resource_id      = aws_api_gateway_resource.hello.id
-  api_key_required = false
-  http_method      = "GET"
-  authorization    = "NONE"
-
-  depends_on = [
-    aws_api_gateway_rest_api.api_gateway_2,
-    aws_api_gateway_resource.hello
-  ]
-}
-
-resource "aws_api_gateway_integration" "lambda_hello" {
-
-  rest_api_id             = aws_api_gateway_rest_api.api_gateway_2.id
-  resource_id             = aws_api_gateway_resource.hello.id
-  http_method             = aws_api_gateway_method.hello_get.http_method
-  integration_http_method = "POST"
-
-  uri = aws_lambda_function.hello.invoke_arn
-
-  type = "AWS"
-  /*
-  content_handling     = "CONVERT_TO_TEXT"
-  passthrough_behavior = "WHEN_NO_TEMPLATES"
-  */
-}
-
-resource "aws_api_gateway_integration_response" "lambda_hello" {
-
-  rest_api_id = aws_api_gateway_rest_api.api_gateway_2.id
-  resource_id = aws_api_gateway_resource.hello.id
-  http_method = aws_api_gateway_method.hello_get.http_method
-  status_code = "200"
-
-  response_parameters = {
-    "method.response.header.Access-Control-Allow-Origin" = "'*'"
-  }
-
-  depends_on = [
-    aws_api_gateway_integration.lambda_hello
-  ]
-}
-
-resource "aws_api_gateway_method_response" "hello_get_response_200" {
-
-  rest_api_id = aws_api_gateway_rest_api.api_gateway_2.id
-  resource_id = aws_api_gateway_resource.hello.id
-  http_method = "GET"
-  status_code = "200"
-
-  response_models = {
-    "application/json" = "Empty"
-  }
-
-  response_parameters = {
-    "method.response.header.Access-Control-Allow-Origin" = true
-  }
-}
-
-resource "aws_lambda_permission" "hello_api_gw" {
-
-  statement_id  = "AllowAPIGatewayInvoke"
-  action        = "lambda:InvokeFunction"
-  function_name = aws_lambda_function.hello.function_name
-  principal     = "apigateway.amazonaws.com"
-
-  // {api_arn}/*/{http_method}/{resource_path}
-  source_arn = "${aws_api_gateway_rest_api.api_gateway_2.execution_arn}/*/${aws_api_gateway_method.hello_get.http_method}/${aws_api_gateway_resource.hello.path_part}"
-}
-
-## [OPTIONS] /hello - CORS
-resource "aws_api_gateway_method" "hello_cors" {
-
-  rest_api_id   = aws_api_gateway_rest_api.api_gateway_2.id
-  resource_id   = aws_api_gateway_resource.hello.id
-  http_method   = "OPTIONS"
-  authorization = "NONE"
-}
-
-resource "aws_api_gateway_integration" "hello_cors" {
-
-  rest_api_id = aws_api_gateway_rest_api.api_gateway_2.id
-  resource_id = aws_api_gateway_resource.hello.id
-  http_method = aws_api_gateway_method.hello_cors.http_method
-
-  type = "MOCK"
-
-  request_templates = {
-    "application/json" = "{'statusCode': 200}"
-  }
-}
-
 ## [POST] /register - Lambda function register
 resource "aws_api_gateway_method" "register_post" {
 
@@ -276,8 +180,8 @@ resource "aws_api_gateway_method" "profile_get" {
   resource_id      = aws_api_gateway_resource.profile.id
   api_key_required = false
   http_method      = "GET"
-  authorization = "CUSTOM"
-  authorizer_id = aws_api_gateway_authorizer.verify-token.id
+  authorization = "NONE"
+  #authorizer_id = aws_api_gateway_authorizer.verify-token.id
 
   request_parameters = {
     "method.request.path.proxy" = true

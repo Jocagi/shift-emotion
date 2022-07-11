@@ -24,8 +24,6 @@ resource "aws_api_gateway_deployment" "api_deploy_2" {
   }
 
   depends_on = [
-    aws_api_gateway_integration.lambda_hello,
-    aws_api_gateway_integration.hello_cors,
     aws_api_gateway_integration.lambda_register,
     aws_api_gateway_integration.register_cors,
     aws_api_gateway_integration.lambda_login,
@@ -81,14 +79,6 @@ resource "aws_api_gateway_authorizer" "verify-token" {
 }
 
 // API Gateway Resources
-
-# /hello
-resource "aws_api_gateway_resource" "hello" {
-
-  rest_api_id = aws_api_gateway_rest_api.api_gateway_2.id
-  parent_id   = aws_api_gateway_rest_api.api_gateway_2.root_resource_id
-  path_part   = "hello"
-}
 
 # /register
 resource "aws_api_gateway_resource" "register" {
