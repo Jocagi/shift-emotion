@@ -27,6 +27,9 @@ function generatePolicyDocument(effect, methodArn) {
 }
 
 module.exports.handler = function verifyToken(event, context, callback) {
+  
+  console.log("Inicia Lamda verifyToken");
+  
   const token = event.authorizationToken.replace("Bearer ", "");
   const methodArn = event.methodArn;
 

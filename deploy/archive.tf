@@ -75,3 +75,45 @@ data "archive_file" "authorize_zip" {
   source_dir  = "../functions/authorize"
   output_path = "../zipFiles/lambda_authorize.zip"
 }
+
+data "archive_file" "profile_zip" {
+
+  type        = "zip"
+  source_dir  = "../functions/profile"
+  output_path = "../zipFiles/lambda_profile.zip"
+}
+
+data "archive_file" "history-del-id_zip" {
+
+  type        = "zip"
+  source_dir  = "../functions/history-del-id"
+  output_path = "../zipFiles/lambda_history-del-id.zip"
+}
+
+data "archive_file" "history-get-all_zip" {
+
+  type        = "zip"
+  source_dir  = "../functions/history-get-all"
+  output_path = "../zipFiles/lambda_history-get-all.zip"
+}
+
+data "archive_file" "history-get-my_zip" {
+
+  type        = "zip"
+  source_dir  = "../functions/history-get-my"
+  output_path = "../zipFiles/lambda_history-get-my.zip"
+}
+
+data "archive_file" "history-get-user_zip" {
+
+  type        = "zip"
+  source_dir  = "../functions/history-get-user"
+  output_path = "../zipFiles/lambda_history-get-user.zip"
+}
+
+data "archive_file" "history-put_zip" {
+
+  type        = "zip"
+  source_dir  = "../functions/history-put"
+  output_path = "../zipFiles/lambda_history-put.zip"
+}

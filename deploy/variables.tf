@@ -13,13 +13,13 @@ variable "provider_conf" {
 variable "jwt_secret" {
 
   type    = string
-  default = "superseguridad2022"
+  default = "abcdefghijklmnopqrstuvwxyz"
 }
 
 variable "app_name" {
 
   type    = string
-  default = "shift-emotion-v1"
+  default = "shift-emotion-jose"
 }
 
 variable "runtime" {
