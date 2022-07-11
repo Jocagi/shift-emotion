@@ -1,32 +1,21 @@
 ## [GET] /hello - Lambda function hello
 resource "aws_api_gateway_method" "hello_get" {
 
-  rest_api_id      = aws_api_gateway_rest_api.api_gateway.id
+  rest_api_id      = aws_api_gateway_rest_api.api_gateway_2.id
   resource_id      = aws_api_gateway_resource.hello.id
   api_key_required = false
   http_method      = "GET"
   authorization    = "NONE"
-}
 
-resource "aws_api_gateway_method_response" "hello_get_response_200" {
-
-  rest_api_id = aws_api_gateway_rest_api.api_gateway.id
-  resource_id = aws_api_gateway_resource.hello.id
-  http_method = "GET"
-  status_code = "200"
-
-  response_models = {
-    "application/json" = "Empty"
-  }
-
-  response_parameters = {
-    "method.response.header.Access-Control-Allow-Origin" = true
-  }
+  depends_on = [
+    aws_api_gateway_rest_api.api_gateway_2,
+    aws_api_gateway_resource.hello
+  ]
 }
 
 resource "aws_api_gateway_integration" "lambda_hello" {
 
-  rest_api_id             = aws_api_gateway_rest_api.api_gateway.id
+  rest_api_id             = aws_api_gateway_rest_api.api_gateway_2.id
   resource_id             = aws_api_gateway_resource.hello.id
   http_method             = aws_api_gateway_method.hello_get.http_method
   integration_http_method = "POST"
@@ -42,10 +31,10 @@ resource "aws_api_gateway_integration" "lambda_hello" {
 
 resource "aws_api_gateway_integration_response" "lambda_hello" {
 
-  rest_api_id = aws_api_gateway_rest_api.api_gateway.id
+  rest_api_id = aws_api_gateway_rest_api.api_gateway_2.id
   resource_id = aws_api_gateway_resource.hello.id
   http_method = aws_api_gateway_method.hello_get.http_method
-  status_code = aws_api_gateway_method_response.hello_get_response_200.status_code
+  status_code = "200"
 
   response_parameters = {
     "method.response.header.Access-Control-Allow-Origin" = "'*'"
@@ -56,6 +45,22 @@ resource "aws_api_gateway_integration_response" "lambda_hello" {
   ]
 }
 
+resource "aws_api_gateway_method_response" "hello_get_response_200" {
+
+  rest_api_id = aws_api_gateway_rest_api.api_gateway_2.id
+  resource_id = aws_api_gateway_resource.hello.id
+  http_method = "GET"
+  status_code = "200"
+
+  response_models = {
+    "application/json" = "Empty"
+  }
+
+  response_parameters = {
+    "method.response.header.Access-Control-Allow-Origin" = true
+  }
+}
+
 resource "aws_lambda_permission" "hello_api_gw" {
 
   statement_id  = "AllowAPIGatewayInvoke"
@@ -64,13 +69,13 @@ resource "aws_lambda_permission" "hello_api_gw" {
   principal     = "apigateway.amazonaws.com"
 
   // {api_arn}/*/{http_method}/{resource_path}
-  source_arn = "${aws_api_gateway_rest_api.api_gateway.execution_arn}/*/${aws_api_gateway_method.hello_get.http_method}/${aws_api_gateway_resource.hello.path_part}"
+  source_arn = "${aws_api_gateway_rest_api.api_gateway_2.execution_arn}/*/${aws_api_gateway_method.hello_get.http_method}/${aws_api_gateway_resource.hello.path_part}"
 }
 
 ## [OPTIONS] /hello - CORS
 resource "aws_api_gateway_method" "hello_cors" {
 
-  rest_api_id   = aws_api_gateway_rest_api.api_gateway.id
+  rest_api_id   = aws_api_gateway_rest_api.api_gateway_2.id
   resource_id   = aws_api_gateway_resource.hello.id
   http_method   = "OPTIONS"
   authorization = "NONE"
@@ -78,7 +83,7 @@ resource "aws_api_gateway_method" "hello_cors" {
 
 resource "aws_api_gateway_integration" "hello_cors" {
 
-  rest_api_id = aws_api_gateway_rest_api.api_gateway.id
+  rest_api_id = aws_api_gateway_rest_api.api_gateway_2.id
   resource_id = aws_api_gateway_resource.hello.id
   http_method = aws_api_gateway_method.hello_cors.http_method
 
@@ -92,7 +97,7 @@ resource "aws_api_gateway_integration" "hello_cors" {
 ## [POST] /register - Lambda function register
 resource "aws_api_gateway_method" "register_post" {
 
-  rest_api_id      = aws_api_gateway_rest_api.api_gateway.id
+  rest_api_id      = aws_api_gateway_rest_api.api_gateway_2.id
   resource_id      = aws_api_gateway_resource.register.id
   api_key_required = false
   http_method      = "POST"
@@ -101,7 +106,7 @@ resource "aws_api_gateway_method" "register_post" {
 
 resource "aws_api_gateway_method_response" "register_post_response_200" {
 
-  rest_api_id = aws_api_gateway_rest_api.api_gateway.id
+  rest_api_id = aws_api_gateway_rest_api.api_gateway_2.id
   resource_id = aws_api_gateway_resource.register.id
   http_method = "POST"
   status_code = "200"
@@ -119,7 +124,7 @@ resource "aws_api_gateway_method_response" "register_post_response_200" {
 
 resource "aws_api_gateway_integration" "lambda_register" {
 
-  rest_api_id             = aws_api_gateway_rest_api.api_gateway.id
+  rest_api_id             = aws_api_gateway_rest_api.api_gateway_2.id
   resource_id             = aws_api_gateway_resource.register.id
   http_method             = aws_api_gateway_method.register_post.http_method
   integration_http_method = "POST"
@@ -129,7 +134,7 @@ resource "aws_api_gateway_integration" "lambda_register" {
 
 resource "aws_api_gateway_integration_response" "lambda_register" {
 
-  rest_api_id = aws_api_gateway_rest_api.api_gateway.id
+  rest_api_id = aws_api_gateway_rest_api.api_gateway_2.id
   resource_id = aws_api_gateway_resource.register.id
   http_method = aws_api_gateway_method.register_post.http_method
   status_code = aws_api_gateway_method_response.register_post_response_200.status_code
@@ -150,13 +155,13 @@ resource "aws_lambda_permission" "register_api_gw" {
   function_name = aws_lambda_function.register.function_name
   principal     = "apigateway.amazonaws.com"
 
-  source_arn = "${aws_api_gateway_rest_api.api_gateway.execution_arn}/*/${aws_api_gateway_method.register_post.http_method}/${aws_api_gateway_resource.register.path_part}"
+  source_arn = "${aws_api_gateway_rest_api.api_gateway_2.execution_arn}/*/${aws_api_gateway_method.register_post.http_method}/${aws_api_gateway_resource.register.path_part}"
 }
 
 ## [OPTIONS] /register - CORS
 resource "aws_api_gateway_method" "register_cors" {
 
-  rest_api_id   = aws_api_gateway_rest_api.api_gateway.id
+  rest_api_id   = aws_api_gateway_rest_api.api_gateway_2.id
   resource_id   = aws_api_gateway_resource.register.id
   http_method   = "OPTIONS"
   authorization = "NONE"
@@ -164,7 +169,7 @@ resource "aws_api_gateway_method" "register_cors" {
 
 resource "aws_api_gateway_integration" "register_cors" {
 
-  rest_api_id = aws_api_gateway_rest_api.api_gateway.id
+  rest_api_id = aws_api_gateway_rest_api.api_gateway_2.id
   resource_id = aws_api_gateway_resource.register.id
   http_method = aws_api_gateway_method.register_cors.http_method
 
@@ -179,7 +184,7 @@ resource "aws_api_gateway_integration" "register_cors" {
 ## [POST] /login - Lambda function login
 resource "aws_api_gateway_method" "login_post" {
 
-  rest_api_id      = aws_api_gateway_rest_api.api_gateway.id
+  rest_api_id      = aws_api_gateway_rest_api.api_gateway_2.id
   resource_id      = aws_api_gateway_resource.login.id
   api_key_required = false
   http_method      = "POST"
@@ -188,7 +193,7 @@ resource "aws_api_gateway_method" "login_post" {
 
 resource "aws_api_gateway_method_response" "login_post_response_200" {
 
-  rest_api_id = aws_api_gateway_rest_api.api_gateway.id
+  rest_api_id = aws_api_gateway_rest_api.api_gateway_2.id
   resource_id = aws_api_gateway_resource.login.id
   http_method = "POST"
   status_code = "200"
@@ -206,7 +211,7 @@ resource "aws_api_gateway_method_response" "login_post_response_200" {
 
 resource "aws_api_gateway_integration" "lambda_login" {
 
-  rest_api_id             = aws_api_gateway_rest_api.api_gateway.id
+  rest_api_id             = aws_api_gateway_rest_api.api_gateway_2.id
   resource_id             = aws_api_gateway_resource.login.id
   http_method             = aws_api_gateway_method.login_post.http_method
   integration_http_method = "POST"
@@ -218,7 +223,7 @@ resource "aws_api_gateway_integration" "lambda_login" {
 
 resource "aws_api_gateway_integration_response" "lambda_login" {
 
-  rest_api_id = aws_api_gateway_rest_api.api_gateway.id
+  rest_api_id = aws_api_gateway_rest_api.api_gateway_2.id
   resource_id = aws_api_gateway_resource.login.id
   http_method = aws_api_gateway_method.login_post.http_method
   status_code = aws_api_gateway_method_response.login_post_response_200.status_code
@@ -239,13 +244,13 @@ resource "aws_lambda_permission" "login_api_gw" {
   function_name = aws_lambda_function.login.function_name
   principal     = "apigateway.amazonaws.com"
 
-  source_arn = "${aws_api_gateway_rest_api.api_gateway.execution_arn}/*/${aws_api_gateway_method.login_post.http_method}/${aws_api_gateway_resource.login.path_part}"
+  source_arn = "${aws_api_gateway_rest_api.api_gateway_2.execution_arn}/*/${aws_api_gateway_method.login_post.http_method}/${aws_api_gateway_resource.login.path_part}"
 }
 
 ## [OPTIONS] /login - CORS
 resource "aws_api_gateway_method" "login_cors" {
 
-  rest_api_id   = aws_api_gateway_rest_api.api_gateway.id
+  rest_api_id   = aws_api_gateway_rest_api.api_gateway_2.id
   resource_id   = aws_api_gateway_resource.login.id
   http_method   = "OPTIONS"
   authorization = "NONE"
@@ -253,7 +258,7 @@ resource "aws_api_gateway_method" "login_cors" {
 
 resource "aws_api_gateway_integration" "login_cors" {
 
-  rest_api_id = aws_api_gateway_rest_api.api_gateway.id
+  rest_api_id = aws_api_gateway_rest_api.api_gateway_2.id
   resource_id = aws_api_gateway_resource.login.id
   http_method = aws_api_gateway_method.login_cors.http_method
 
@@ -267,7 +272,7 @@ resource "aws_api_gateway_integration" "login_cors" {
 ## [GET] /profile - Lambda function profile
 resource "aws_api_gateway_method" "profile_get" {
 
-  rest_api_id      = aws_api_gateway_rest_api.api_gateway.id
+  rest_api_id      = aws_api_gateway_rest_api.api_gateway_2.id
   resource_id      = aws_api_gateway_resource.profile.id
   api_key_required = false
   http_method      = "GET"
@@ -281,7 +286,7 @@ resource "aws_api_gateway_method" "profile_get" {
 
 resource "aws_api_gateway_method_response" "profile_get_response_200" {
 
-  rest_api_id = aws_api_gateway_rest_api.api_gateway.id
+  rest_api_id = aws_api_gateway_rest_api.api_gateway_2.id
   resource_id = aws_api_gateway_resource.profile.id
   http_method = "GET"
   status_code = "200"
@@ -299,7 +304,7 @@ resource "aws_api_gateway_method_response" "profile_get_response_200" {
 
 resource "aws_api_gateway_integration" "lambda_profile" {
 
-  rest_api_id             = aws_api_gateway_rest_api.api_gateway.id
+  rest_api_id             = aws_api_gateway_rest_api.api_gateway_2.id
   resource_id             = aws_api_gateway_resource.profile.id
   http_method             = aws_api_gateway_method.profile_get.http_method
   integration_http_method = "POST"
@@ -311,7 +316,7 @@ resource "aws_api_gateway_integration" "lambda_profile" {
 
 resource "aws_api_gateway_integration_response" "lambda_profile" {
 
-  rest_api_id = aws_api_gateway_rest_api.api_gateway.id
+  rest_api_id = aws_api_gateway_rest_api.api_gateway_2.id
   resource_id = aws_api_gateway_resource.profile.id
   http_method = aws_api_gateway_method.profile_get.http_method
   status_code = aws_api_gateway_method_response.profile_get_response_200.status_code
@@ -332,13 +337,13 @@ resource "aws_lambda_permission" "profile_api_gw" {
   function_name = aws_lambda_function.profile.function_name
   principal     = "apigateway.amazonaws.com"
 
-  source_arn = "${aws_api_gateway_rest_api.api_gateway.execution_arn}/*/${aws_api_gateway_method.profile_get.http_method}/${aws_api_gateway_resource.profile.path_part}"
+  source_arn = "${aws_api_gateway_rest_api.api_gateway_2.execution_arn}/*/${aws_api_gateway_method.profile_get.http_method}/${aws_api_gateway_resource.profile.path_part}"
 }
 
 ## [OPTIONS] /profile - CORS
 resource "aws_api_gateway_method" "profile_cors" {
 
-  rest_api_id   = aws_api_gateway_rest_api.api_gateway.id
+  rest_api_id   = aws_api_gateway_rest_api.api_gateway_2.id
   resource_id   = aws_api_gateway_resource.profile.id
   http_method   = "OPTIONS"
   authorization = "NONE"
@@ -346,7 +351,7 @@ resource "aws_api_gateway_method" "profile_cors" {
 
 resource "aws_api_gateway_integration" "profile_cors" {
 
-  rest_api_id = aws_api_gateway_rest_api.api_gateway.id
+  rest_api_id = aws_api_gateway_rest_api.api_gateway_2.id
   resource_id = aws_api_gateway_resource.profile.id
   http_method = aws_api_gateway_method.profile_cors.http_method
 
