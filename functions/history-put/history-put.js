@@ -6,7 +6,7 @@ const dynamo = new AWS.DynamoDB.DocumentClient();
 
 module.exports.handler = async function(event) {
   
-  const userObj = await getUserFromToken(event.headers.Authorization);
+  //const userObj = await getUserFromToken(event.headers.Authorization);
 
   let body;
   let statusCode = 200;
@@ -25,7 +25,7 @@ module.exports.handler = async function(event) {
         TableName: "playlist-history",
         Item: {
           id: requestId,
-          userId: userObj.email, 
+          userId: requestJSON.email, 
           createdAt: date_ob.toString(),
           name: requestJSON.name,
           emotion: requestJSON.emotion,

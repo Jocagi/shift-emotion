@@ -6,7 +6,7 @@ const dynamo = new AWS.DynamoDB.DocumentClient();
 
 module.exports.handler = async function(event) {
   
-  const userObj = await getUserFromToken(event.headers.Authorization);
+  //const userObj = await getUserFromToken(event.headers.Authorization);
 
   let body;
   let statusCode = 200;
