@@ -13,3 +13,8 @@ output "api_key" {
 
   value = nonsensitive(aws_api_gateway_api_key.api_key.value)
 }
+
+output "lambda" {
+  value = "${aws_api_gateway_rest_api.api_gateway.execution_arn}/*/${aws_api_gateway_method.login_post.http_method}/${aws_api_gateway_resource.login.path_part}"
+  
+}
