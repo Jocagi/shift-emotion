@@ -37,14 +37,7 @@ resource "aws_api_gateway_deployment" "api_deploy" {
     aws_api_gateway_integration.spotify_analysis_cors,
     aws_api_gateway_integration.spotify_genres_cors,
     aws_api_gateway_integration.spotify_recomendation_cors,
-    aws_api_gateway_integration.spotify_recomendations_cors,
-    aws_api_gateway_integration.lambda_hello,
-
-    aws_api_gateway_integration.hello_cors,
-    aws_api_gateway_integration.lambda_register,
-    aws_api_gateway_integration.register_cors,
-    aws_api_gateway_integration.lambda_login,
-    aws_api_gateway_integration.login_cors
+    aws_api_gateway_integration.spotify_recomendations_cors
   ]
 
 }
@@ -144,28 +137,4 @@ resource "aws_api_gateway_resource" "spotify_recomendations" {
   rest_api_id = aws_api_gateway_rest_api.api_gateway.id
   parent_id   = aws_api_gateway_resource.spotify.id
   path_part   = "recomendations"
-}
-
-# /hello
-resource "aws_api_gateway_resource" "hello" {
-
-  rest_api_id = aws_api_gateway_rest_api.api_gateway.id
-  parent_id   = aws_api_gateway_rest_api.api_gateway.root_resource_id
-  path_part   = "hello"
-}
-
-# /register
-resource "aws_api_gateway_resource" "register" {
-
-  rest_api_id = aws_api_gateway_rest_api.api_gateway.id
-  parent_id   = aws_api_gateway_rest_api.api_gateway.root_resource_id
-  path_part   = "register"
-}
-
-# /login
-resource "aws_api_gateway_resource" "login" {
-
-  rest_api_id = aws_api_gateway_rest_api.api_gateway.id
-  parent_id   = aws_api_gateway_rest_api.api_gateway.root_resource_id
-  path_part   = "login"
 }
