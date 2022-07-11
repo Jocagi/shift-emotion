@@ -32,8 +32,8 @@ resource "aws_api_gateway_integration" "lambda_hello" {
   integration_http_method = "POST"
 
   uri = aws_lambda_function.hello.invoke_arn
- 
-  type                 = "AWS"
+
+  type = "AWS"
   /*
   content_handling     = "CONVERT_TO_TEXT"
   passthrough_behavior = "WHEN_NO_TEMPLATES"
@@ -97,10 +97,6 @@ resource "aws_api_gateway_method" "register_post" {
   api_key_required = false
   http_method      = "POST"
   authorization    = "NONE"
-
-  request_parameters = {
-    "method.request.path.proxy" = true
-  }
 }
 
 resource "aws_api_gateway_method_response" "register_post_response_200" {
@@ -127,7 +123,8 @@ resource "aws_api_gateway_integration" "lambda_register" {
   resource_id             = aws_api_gateway_resource.register.id
   http_method             = aws_api_gateway_method.register_post.http_method
   integration_http_method = "POST"
-  type                    = "AWS_PROXY"
+  type                    = "AWS"
+  content_handling = "CONVERT_TO_TEXT"
   uri                     = aws_lambda_function.register.invoke_arn
 }
 
@@ -188,10 +185,6 @@ resource "aws_api_gateway_method" "login_post" {
   api_key_required = false
   http_method      = "POST"
   authorization    = "NONE"
-
-  request_parameters = {
-    "method.request.path.proxy" = true
-  }
 }
 
 resource "aws_api_gateway_method_response" "login_post_response_200" {
@@ -220,8 +213,9 @@ resource "aws_api_gateway_integration" "lambda_login" {
   integration_http_method = "POST"
 
   uri = aws_lambda_function.login.invoke_arn
- 
-  type                 = "AWS_PROXY"
+
+  type             = "AWS"
+  content_handling = "CONVERT_TO_TEXT"
 }
 
 resource "aws_api_gateway_integration_response" "lambda_login" {
