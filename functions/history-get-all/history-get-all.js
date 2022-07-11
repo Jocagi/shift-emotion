@@ -12,10 +12,20 @@ module.exports.handler = async function(event) {
 
   try {
     console.log("Obtener Historial");
-        body = 
+        CountPlaylists = 
           await dynamo.scan({
              TableName: "playlist-history" 
             }).promise();
+
+        CountUsers = 
+            await dynamo.scan({
+               TableName: "users-table" 
+              }).promise();
+
+        body = {
+          CountPlaylists: CountPlaylists.Count,
+          CountUsers: CountUsers.Count
+        };
 
   } catch (err) {
     statusCode = 400;

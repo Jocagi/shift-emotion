@@ -349,3 +349,74 @@ resource "aws_lambda_permission" "history_get_my_api_gw" {
 
   source_arn = "${aws_api_gateway_rest_api.api_gateway_2.execution_arn}/*/${aws_api_gateway_method.history_get_my.http_method}/${aws_api_gateway_resource.history.path_part}"
 }
+
+## [GET] /stats - Lambda function history
+resource "aws_api_gateway_method" "history_get_all" {
+
+  rest_api_id      = aws_api_gateway_rest_api.api_gateway_2.id
+  resource_id      = aws_api_gateway_resource.history-all.id
+  api_key_required = false
+  http_method      = "GET"
+  authorization = "NONE"
+  #authorizer_id = aws_api_gateway_authorizer.verify-token.id
+
+  request_parameters = {
+    "method.request.path.proxy" = true
+  }
+}
+
+resource "aws_api_gateway_method_response" "history_get_all_response_200" {
+
+  rest_api_id = aws_api_gateway_rest_api.api_gateway_2.id
+  resource_id = aws_api_gateway_resource.history-all.id
+  http_method = "GET"
+  status_code = "200"
+
+  response_models = {
+    "application/json" = "Empty"
+  }
+
+  response_parameters = {
+    "method.response.header.Access-Control-Allow-Origin" = true
+  }
+
+  depends_on = [aws_api_gateway_method.history_get_all]
+}
+
+resource "aws_api_gateway_integration" "lambda_history_get_all" {
+
+  rest_api_id             = aws_api_gateway_rest_api.api_gateway_2.id
+  resource_id             = aws_api_gateway_resource.history-all.id
+  http_method             = aws_api_gateway_method.history_get_all.http_method
+  integration_http_method = "POST"
+
+  uri = aws_lambda_function.history-get-all.invoke_arn
+ 
+  type                 = "AWS_PROXY"
+}
+
+resource "aws_api_gateway_integration_response" "lambda_history_get_all" {
+
+  rest_api_id = aws_api_gateway_rest_api.api_gateway_2.id
+  resource_id = aws_api_gateway_resource.history-all.id
+  http_method = aws_api_gateway_method.history_get_all.http_method
+  status_code = aws_api_gateway_method_response.history_get_all_response_200.status_code
+
+  response_parameters = {
+    "method.response.header.Access-Control-Allow-Origin" = "'*'"
+  }
+
+  depends_on = [
+    aws_api_gateway_integration.lambda_history_get_all
+  ]
+}
+
+resource "aws_lambda_permission" "history_get_all_api_gw" {
+
+  statement_id  = "AllowAPIGatewayInvoke"
+  action        = "lambda:InvokeFunction"
+  function_name = aws_lambda_function.history-get-all.function_name
+  principal     = "apigateway.amazonaws.com"
+
+  source_arn = "${aws_api_gateway_rest_api.api_gateway_2.execution_arn}/*/${aws_api_gateway_method.history_get_all.http_method}/${aws_api_gateway_resource.history-all.path_part}"
+}
