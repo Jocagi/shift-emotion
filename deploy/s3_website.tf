@@ -11,7 +11,6 @@ resource "aws_s3_bucket_acl" "website" {
 }
 
 // AWS IAM data for S3 bucket's website policy
-/*
 data "aws_iam_policy_document" "website_s3" {
 
   statement {
@@ -38,7 +37,7 @@ resource "aws_s3_bucket_policy" "website" {
   ]
   
 }
-*/
+
 /*
 resource "aws_s3_bucket_website_configuration" "website" {
 

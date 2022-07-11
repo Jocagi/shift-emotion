@@ -5,8 +5,8 @@ variable "provider_conf" {
 
   default = {
     region     = "us-east-1"
-    access_key = ""
-    secret_key = ""
+    access_key = "AKIA4OMG2YY4VZNJCCKJ"
+    secret_key = "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"
   }
 }
 
