@@ -1,5 +1,4 @@
 // Website
-/*
 resource "aws_cloudfront_origin_access_identity" "OAI" {
   comment = "OAI for cloudfront to website s3"
 }
@@ -151,4 +150,3 @@ resource "aws_cloudfront_distribution" "cloudfront" {
     response_page_path    = "/index.html"
   }
 }
-*/

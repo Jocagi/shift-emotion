@@ -146,3 +146,63 @@ resource "aws_s3_object" "authorize_zip" {
 
   etag = filemd5(data.archive_file.authorize_zip.output_path)
 }
+
+resource "aws_s3_object" "profile_zip" {
+
+  bucket = aws_s3_bucket.s3_lambdas.id
+
+  key    = "lambda_profile.zip"
+  source = data.archive_file.profile_zip.output_path
+
+  etag = filemd5(data.archive_file.profile_zip.output_path)
+}
+
+resource "aws_s3_object" "history-del-id_zip" {
+
+  bucket = aws_s3_bucket.s3_lambdas.id
+
+  key    = "lambda_history-del-id.zip"
+  source = data.archive_file.history-del-id_zip.output_path
+
+  etag = filemd5(data.archive_file.history-del-id_zip.output_path)
+}
+
+resource "aws_s3_object" "history-get-all_zip" {
+
+  bucket = aws_s3_bucket.s3_lambdas.id
+
+  key    = "lambda_history-get-all.zip"
+  source = data.archive_file.history-get-all_zip.output_path
+
+  etag = filemd5(data.archive_file.history-get-all_zip.output_path)
+}
+
+resource "aws_s3_object" "history-get-my_zip" {
+
+  bucket = aws_s3_bucket.s3_lambdas.id
+
+  key    = "lambda_history-get-my.zip"
+  source = data.archive_file.history-get-my_zip.output_path
+
+  etag = filemd5(data.archive_file.history-get-my_zip.output_path)
+}
+
+resource "aws_s3_object" "history-get-user_zip" {
+
+  bucket = aws_s3_bucket.s3_lambdas.id
+
+  key    = "lambda_history-get-user.zip"
+  source = data.archive_file.history-get-user_zip.output_path
+
+  etag = filemd5(data.archive_file.history-get-user_zip.output_path)
+}
+
+resource "aws_s3_object" "history-put_zip" {
+
+  bucket = aws_s3_bucket.s3_lambdas.id
+
+  key    = "lambda_history-put.zip"
+  source = data.archive_file.history-put_zip.output_path
+
+  etag = filemd5(data.archive_file.history-put_zip.output_path)
+}

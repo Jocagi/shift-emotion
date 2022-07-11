@@ -62,3 +62,39 @@ resource "aws_cloudwatch_log_group" "lambda_authorize" {
   name              = "/aws/lambda/${aws_lambda_function.authorize.function_name}"
   retention_in_days = 30
 }
+
+resource "aws_cloudwatch_log_group" "lambda_profile" {
+
+  name              = "/aws/lambda/${aws_lambda_function.profile.function_name}"
+  retention_in_days = 30
+}
+
+resource "aws_cloudwatch_log_group" "lambda_history-del-id" {
+
+  name              = "/aws/lambda/${aws_lambda_function.history-del-id.function_name}"
+  retention_in_days = 30
+}
+
+resource "aws_cloudwatch_log_group" "lambda_history-get-all" {
+
+  name              = "/aws/lambda/${aws_lambda_function.history-get-all.function_name}"
+  retention_in_days = 30
+}
+
+resource "aws_cloudwatch_log_group" "lambda_history-get-my" {
+
+  name              = "/aws/lambda/${aws_lambda_function.history-get-my.function_name}"
+  retention_in_days = 30
+}
+
+resource "aws_cloudwatch_log_group" "lambda_history-get-user" {
+
+  name              = "/aws/lambda/${aws_lambda_function.history-get-user.function_name}"
+  retention_in_days = 30
+}
+
+resource "aws_cloudwatch_log_group" "lambda_history-put" {
+
+  name              = "/aws/lambda/${aws_lambda_function.history-put.function_name}"
+  retention_in_days = 30
+}

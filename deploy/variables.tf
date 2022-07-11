@@ -5,21 +5,21 @@ variable "provider_conf" {
 
   default = {
     region     = "us-east-1"
-    access_key = ""
-    secret_key = ""
+    access_key = "AKIA4OMG2YY4TXDO3VVL"
+    secret_key = "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"
   }
 }
 
 variable "jwt_secret" {
 
   type    = string
-  default = "superseguridad2022"
+  default = "abcdefghijklmnopqrstuvwxyz"
 }
 
 variable "app_name" {
 
   type    = string
-  default = "shift-emotion-v1"
+  default = "shift-emotion-prod"
 }
 
 variable "runtime" {
