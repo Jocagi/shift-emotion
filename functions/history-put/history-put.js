@@ -33,7 +33,10 @@ module.exports.handler = async function(event) {
         }
       })
       .promise();
-    body = `Put item ${requestId}`;
+    body = {
+      statusCode: 200,
+      message: `Put item ${requestId}`
+    };
   } catch (err) {
     statusCode = 400;
     body = err.message;

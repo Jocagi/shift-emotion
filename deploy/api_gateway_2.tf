@@ -31,7 +31,14 @@ resource "aws_api_gateway_deployment" "api_deploy_2" {
     aws_api_gateway_integration.lambda_login,
     aws_api_gateway_integration.login_cors,
     aws_api_gateway_integration.lambda_profile,
-    aws_api_gateway_integration.profile_cors
+    aws_api_gateway_integration.profile_cors,
+    aws_api_gateway_integration.lambda_history_put,
+    aws_api_gateway_integration.lambda_history_get,
+    aws_api_gateway_integration.lambda_history_get_my,
+    aws_api_gateway_integration.lambda_history_delete,
+    aws_api_gateway_integration.history_cors,
+    aws_api_gateway_integration.history-all_cors,
+    aws_api_gateway_integration.history-id_cors
   ]
 
 }
@@ -105,4 +112,28 @@ resource "aws_api_gateway_resource" "profile" {
   rest_api_id = aws_api_gateway_rest_api.api_gateway_2.id
   parent_id   = aws_api_gateway_rest_api.api_gateway_2.root_resource_id
   path_part   = "profile"
+}
+
+# /history/
+resource "aws_api_gateway_resource" "history" {
+
+  rest_api_id = aws_api_gateway_rest_api.api_gateway_2.id
+  parent_id   = aws_api_gateway_rest_api.api_gateway_2.root_resource_id
+  path_part   = "history"
+}
+
+# /history/{id}
+resource "aws_api_gateway_resource" "history-id" {
+
+  rest_api_id = aws_api_gateway_rest_api.api_gateway_2.id
+  parent_id   = aws_api_gateway_resource.history.id
+  path_part   = "{id}"
+}
+
+# /history/all
+resource "aws_api_gateway_resource" "history-all" {
+
+  rest_api_id = aws_api_gateway_rest_api.api_gateway_2.id
+  parent_id   = aws_api_gateway_rest_api.api_gateway_2.root_resource_id
+  path_part   = "all"
 }

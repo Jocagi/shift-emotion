@@ -4,22 +4,22 @@ variable "provider_conf" {
   type        = map(any)
 
   default = {
-    region     = "us-east-1"
-    access_key = ""
-    secret_key = ""
+    region     = "us-east-2"
+    access_key = "AKIASI3Y4HHVLAKWG35S"
+    secret_key = "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"
   }
 }
 
 variable "jwt_secret" {
 
   type    = string
-  default = "superseguridad2022"
+  default = "abcdefghijklmnopqrstuvwxyz"
 }
 
 variable "app_name" {
 
   type    = string
-  default = "shift-emotion-v1"
+  default = "shift-emotion-jose"
 }
 
 variable "runtime" {

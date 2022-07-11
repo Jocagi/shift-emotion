@@ -27,8 +27,11 @@ module.exports.handler = async function(event) {
       }
     })
     .promise();
-  body = `Deleted item ${event.pathParameters.id}`;
-
+    
+    body = {
+        statusCode: 200,
+        message: `Deleted item ${event.pathParameters.id}`
+      }
   } catch (err) {
     statusCode = 400;
     body = err.message;

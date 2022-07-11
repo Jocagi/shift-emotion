@@ -1,6 +1,6 @@
 const AWS = require("aws-sdk");
 const { v4: uuidv4 } = require("uuid");
-const { getUserFromToken } = require("../lib/utils");
+const { getUserFromToken } = require("utils");
 
 const dynamo = new AWS.DynamoDB.DocumentClient();
 
