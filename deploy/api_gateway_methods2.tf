@@ -123,8 +123,7 @@ resource "aws_api_gateway_integration" "lambda_register" {
   resource_id             = aws_api_gateway_resource.register.id
   http_method             = aws_api_gateway_method.register_post.http_method
   integration_http_method = "POST"
-  type                    = "AWS"
-  content_handling = "CONVERT_TO_TEXT"
+  type                    = "AWS_PROXY"
   uri                     = aws_lambda_function.register.invoke_arn
 }
 
@@ -214,8 +213,7 @@ resource "aws_api_gateway_integration" "lambda_login" {
 
   uri = aws_lambda_function.login.invoke_arn
 
-  type             = "AWS"
-  content_handling = "CONVERT_TO_TEXT"
+  type             = "AWS_PROXY"
 }
 
 resource "aws_api_gateway_integration_response" "lambda_login" {
